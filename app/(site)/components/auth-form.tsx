@@ -1,5 +1,6 @@
 'use client';
 
+import axios from "axios";
 import { useState, useCallback } from "react";
 import {
   FieldValues,
@@ -44,7 +45,7 @@ export default function AuthForm() {
     setIsLoading(true);
 
     if (variant === 'REGISTER') {
-      // Axios Register
+      axios.post('/api/register', data);
     }
 
     if (variant === 'LOGIN') {
