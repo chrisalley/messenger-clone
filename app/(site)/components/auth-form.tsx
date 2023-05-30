@@ -1,84 +1,79 @@
-'use client';
+"use client";
 
 import axios from "axios";
 import { useState, useCallback, useEffect } from "react";
-import {
-  FieldValues,
-  SubmitHandler,
-  useForm,
-} from "react-hook-form";
-import { BsGithub, BsGoogle } from 'react-icons/bs';
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { BsGithub, BsGoogle } from "react-icons/bs";
 
 import Input from "../../components/inputs/input";
-import Button from '../../components/button';
+import Button from "../../components/button";
 import AuthSocialButton from "./auth-social-button";
-import { toast } from 'react-hot-toast';
+import { toast } from "react-hot-toast";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-type Variant = 'LOGIN' | 'REGISTER';
+type Variant = "LOGIN" | "REGISTER";
 
 export default function AuthForm() {
   const session = useSession();
   const router = useRouter();
-  const [variant, setVariant] = useState<Variant>('LOGIN');
+  const [variant, setVariant] = useState<Variant>("LOGIN");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (session?.status === 'authenticated') {
-      router.push('/users');
+    if (session?.status === "authenticated") {
+      router.push("/users");
     }
   }, [session?.status, router]);
 
   const toggleVariant = useCallback(() => {
-    if (variant === 'LOGIN') {
-      setVariant('REGISTER');
+    if (variant === "LOGIN") {
+      setVariant("REGISTER");
     } else {
-      setVariant('LOGIN');
+      setVariant("LOGIN");
     }
   }, [variant]);
 
   const {
     register,
     handleSubmit,
-    formState: {
-      errors
-    }
+    formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: '',
-      email: '',
-      password: ''
-    }
+      name: "",
+      email: "",
+      password: "",
+    },
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
-    if (variant === 'REGISTER') {
-      axios.post('/api/register', data)
-        .then(() => signIn('credentials', data))
-        .catch(() => toast.error('Something went wrong.'))
-        .finally(() => setIsLoading(false))
+    if (variant === "REGISTER") {
+      axios
+        .post("/api/register", data)
+        .then(() => signIn("credentials", data))
+        .catch(() => toast.error("Something went wrong."))
+        .finally(() => setIsLoading(false));
     }
 
-    if (variant === 'LOGIN') {
-      signIn('credentials', {
+    if (variant === "LOGIN") {
+      signIn("credentials", {
         ...data,
-        redirect: false
+        redirect: false,
       })
         .then((callback) => {
           if (callback?.error) {
-            toast.error('Invalid credentials');
+            toast.error("Invalid credentials");
           }
 
           if (callback?.ok && !callback?.error) {
-            toast.success('Logged in!');
+            toast.success("Logged in!");
           }
         })
         .finally(() => setIsLoading(false));
     }
-  }
+  };
 
   const socialAction = (action: string) => {
     setIsLoading(true);
@@ -86,15 +81,15 @@ export default function AuthForm() {
     signIn(action, { redirect: false })
       .then((callback) => {
         if (callback?.error) {
-          toast.error('Invalid Credentials');
+          toast.error("Invalid Credentials");
         }
 
         if (callback?.ok && !callback?.error) {
-          toast.success('Logged in!');
+          toast.success("Logged in!");
         }
       })
       .finally(() => setIsLoading(false));
-  }
+  };
 
   return (
     <div
@@ -107,11 +102,11 @@ export default function AuthForm() {
     >
       <div
         className="
+          sm-rounded-lg
           bg-white
           px-4
           py-8
           shadow
-          sm-rounded-lg
           sm:px-10
         "
       >
@@ -150,11 +145,11 @@ export default function AuthForm() {
           <div className="relative">
             <div
               className="
-              absolute
-              inset-0
-              flex
-              items-center
-            "
+                absolute
+                inset-0
+                flex
+                items-center
+              "
             >
               <div className="w-full border-t border-gray-300" />
             </div>
@@ -176,21 +171,21 @@ export default function AuthForm() {
           </div>
           <div
             className="
-            flex
-            gap-2
-            justify-center
-            text-sm
-            mt-6
-            px-2
-            text-gray-500
-          "
+              mt-6
+              flex
+              justify-center
+              gap-2
+              px-2
+              text-sm
+              text-gray-500
+            "
           >
             <div>
               {variant === "LOGIN"
                 ? "New to Messenger?"
                 : "Already have an account?"}
             </div>
-            <div onClick={toggleVariant} className="underline cursor-pointer">
+            <div onClick={toggleVariant} className="cursor-pointer underline">
               {variant === "LOGIN" ? "Create an account" : "Login"}
             </div>
           </div>

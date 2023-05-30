@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
 import useRoutes from "@/app/hooks/use-routes";
-import { useState } from 'react';
+import { useState } from "react";
 import { User } from "@prisma/client";
 import Avatar from "../avatar";
 import DesktopItem from "./desktop-item";
@@ -10,9 +10,7 @@ interface DesktopSidebarProps {
   currentUser: User;
 }
 
-export default function DesktopSidebar({
-  currentUser
-}: DesktopSidebarProps) {
+export default function DesktopSidebar({ currentUser }: DesktopSidebarProps) {
   const routes = useRoutes();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -20,19 +18,19 @@ export default function DesktopSidebar({
     <div
       className="
         hidden
+        justify-between
         lg:fixed
         lg:inset-y-0
         lg:left-0
         lg:z-40
-        lg:w-20
-        xl:px-6
-        lg:overflow-y-auto
-        lg:bg-white
-        lg:border-r-[1px]
-        lg:pb-4
         lg:flex
+        lg:w-20
         lg:flex-col
-        justify-between
+        lg:overflow-y-auto
+        lg:border-r-[1px]
+        lg:bg-white
+        lg:pb-4
+        xl:px-6
       "
     >
       <nav
@@ -52,7 +50,7 @@ export default function DesktopSidebar({
             space-y-1
           "
         >
-          {routes.map(item => (
+          {routes.map((item) => (
             <DesktopItem
               key={item.label}
               href={item.href}
@@ -69,20 +67,21 @@ export default function DesktopSidebar({
           mt-4
           flex
           flex-col
-          justify-between
           items-center
-        ">
+          justify-between
+        "
+      >
         <div
           onClick={() => setIsOpen(true)}
           className="
             cursor-pointer
-            hover:opacity-75
             transition
+            hover:opacity-75
           "
         >
           <Avatar user={currentUser} />
         </div>
       </nav>
     </div>
-  )
+  );
 }

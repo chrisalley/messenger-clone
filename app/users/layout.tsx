@@ -1,7 +1,7 @@
 import Sidebar from "../components/sidebar/sidebar";
 
 export default async function UsersLayout({
-  children
+  children,
 }: {
   children: React.ReactNode;
 }) {
@@ -11,4 +11,4 @@ export default async function UsersLayout({
       <div className="h-full">{children}</div>
     </Sidebar>
   );
-};
+}

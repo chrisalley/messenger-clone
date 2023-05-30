@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import useConversation from "@/app/hooks/use-conversation";
 import useRoutes from "@/app/hooks/use-routes";
@@ -16,18 +16,18 @@ export default function MobileFooter() {
     <div
       className="
         fixed
-        justify-between
-        w-full
         bottom-0
         z-40
         flex
+        w-full
         items-center
-        bg-white
+        justify-between
         border-t-[1px]
+        bg-white
         lg:hidden
       "
     >
-      {routes.map(route => (
+      {routes.map((route) => (
         <MobileItem
           key={route.href}
           href={route.href}
@@ -37,5 +37,5 @@ export default function MobileFooter() {
         />
       ))}
     </div>
-  )
+  );
 }

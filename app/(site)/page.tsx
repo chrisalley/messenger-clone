@@ -1,5 +1,5 @@
-import Image from "next/image"
-import AuthForm from "./components/auth-form"
+import Image from "next/image";
+import AuthForm from "./components/auth-form";
 
 export default function Home() {
   return (
@@ -9,10 +9,10 @@ export default function Home() {
         min-h-full
         flex-col
         justify-center
+        bg-gray-100
         py-12
         sm:px-6
         lg:px-8
-        bg-gray-100
       "
     >
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -38,5 +38,5 @@ export default function Home() {
       </div>
       <AuthForm />
     </div>
-  )
+  );
 }
